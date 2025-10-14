@@ -1,5 +1,5 @@
 # Build directories and binary files
-build/
+build*/
 out/
 out/coverage/*
 cmake-build-*/
@@ -34,3 +34,4 @@ $RECYCLE.BIN/
 .TemporaryItems
 ehthumbs.db
 Thumbs.db
+.clangd
