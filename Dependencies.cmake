@@ -40,4 +40,62 @@ function(order_book_setup_dependencies)
     cpmaddpackage("gh:lefticus/tools#update_build_system")
   endif()
 
+  set(
+    BOOST_LIBS
+    asio
+    align
+    date_time
+    context
+    assert
+    algorithm
+    array
+    config
+    core
+    bind
+    static_assert
+    throw_exception
+    concept_check
+    mp11
+    pool
+    exception
+    preprocessor
+    integer
+    smart_ptr
+    tuple
+    type_traits
+    predef
+    function
+    winapi
+    system
+    io
+    iterator
+    mpl
+    variant2
+    detail
+    lexical_cast
+    fusion
+    utility
+    container
+    range
+    optional
+    container_hash
+    intrusive
+    regex
+    move
+    describe
+    conversion
+    unordered
+    function_types
+    typeof
+    numeric_conversion
+    tokenizer
+    functional
+  )
+
+  foreach(LIB IN LISTS BOOST_LIBS)
+    if (NOT TARGET "boost_${LIB}")
+      cpmaddpackage("gh:boostorg/${LIB}#boost-1.89.0")
+    endif()
+  endforeach()
+
 endfunction()
