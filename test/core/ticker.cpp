@@ -35,4 +35,18 @@ TEST_CASE("Ticker can be printed as a string", "[ticker]")
   REQUIRE(sstr.str() == "ABCD");
 }
 
+TEST_CASE("Default-constructed ticker equal to empty string", "[ticker]")
+{
+  Ticker ticker{};
+  REQUIRE(ticker == "");
+}
+
+TEST_CASE("Default-constructed Ticker can be printed as a string", "[ticker]")
+{
+  Ticker ticker{};
+  std::stringstream sstr;
+  sstr << ticker;
+  REQUIRE(sstr.str() == "");
+}
+
 }// namespace order_book::core

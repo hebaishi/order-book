@@ -8,6 +8,7 @@ namespace order_book::core {
 template<size_t N = 4> class Ticker
 {
 public:
+  explicit Ticker() = default;
   explicit Ticker(std::string_view str)
   {
     if (str.size() > N) { throw std::runtime_error("String too big"); }
@@ -15,10 +16,15 @@ public:
   }
   bool operator==(const Ticker &) const = default;
 
-  bool operator==(std::string_view str) { return std::equal(storage_.begin(), storage_.end(), str.begin(), str.end()); }
+  bool operator==(std::string_view str)
+  {
+    if (storage_[0] == '\0') { return str.empty(); }
+    return std::equal(storage_.begin(), storage_.end(), str.begin(), str.end());
+  }
   bool operator<(const Ticker &other) const { return storage_ < other.storage_; }
   friend std::ostream &operator<<(std::ostream &stream, const Ticker &ticker)
   {
+    if (ticker.storage_[0] == '\0') { return stream; }
     std::array<char, N + 1> string_array;
     std::copy(ticker.storage_.begin(), ticker.storage_.end(), string_array.begin());
     stream << string_array.data();
