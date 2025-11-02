@@ -2,6 +2,8 @@
 
 #include <order_book/core/ticker.hpp>
 
+namespace order_book::core {
+
 TEST_CASE("Ticker can be constructed from a string_view", "[ticker]") { REQUIRE_NOTHROW(Ticker{ "AABB" }); }
 
 TEST_CASE("Ticker object can be equality-compared to another", "[ticker]")
@@ -32,3 +34,5 @@ TEST_CASE("Ticker can be printed as a string", "[ticker]")
   sstr << ticker;
   REQUIRE(sstr.str() == "ABCD");
 }
+
+}// namespace order_book::core

@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <string_view>
 
+namespace order_book::core {
+
 template<size_t N = 4> class Ticker
 {
 public:
@@ -26,3 +28,4 @@ public:
 private:
   std::array<char, N> storage_;
 };
+}// namespace order_book::core
