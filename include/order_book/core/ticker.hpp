@@ -25,6 +25,7 @@ public:
     return std::equal(storage_.begin(), storage_.end(), str.begin(), str.end());
   }
   bool operator<(const Ticker &other) const { return storage_ < other.storage_; }
+  bool operator>(const Ticker &other) const { return storage_ > other.storage_; }
   friend std::ostream &operator<<(std::ostream &stream, const Ticker &ticker)
   {
     if (ticker.IsEmpty()) { return stream; }

@@ -4,61 +4,48 @@
 
 namespace order_book::core {
 
-TEST_CASE("Ticker can be constructed from a string_view", "[ticker]") { REQUIRE_NOTHROW(Ticker{ "AABB" }); }
-
-TEST_CASE("Ticker object can be equality-compared to another", "[ticker]")
-{
-  Ticker ticker_a{ "AABB" };
-  Ticker ticker_b{ "AABB" };
-  REQUIRE(ticker_a == ticker_b);
-}
-
-TEST_CASE("Ticker object can be compared to another to see which is greater", "[ticker]")
-{
-  Ticker ticker_a{ "AAAA" };
-  Ticker ticker_b{ "BBBB" };
-  REQUIRE(ticker_a < ticker_b);
-}
-
-TEST_CASE("Ticker can be compared to a string_view", "[ticker]")
-{
-  Ticker ticker_a{ "AABB" };
-  std::string_view str("AABB");
-  REQUIRE(ticker_a == str);
-}
-
-TEST_CASE("Ticker can be printed as a string", "[ticker]")
-{
-  Ticker ticker{ "ABCD" };
-  std::stringstream sstr;
-  sstr << ticker;
-  REQUIRE(sstr.str() == "ABCD");
-}
-
-TEST_CASE("Default-constructed ticker equal to empty string", "[ticker]")
+TEST_CASE("An empty ticker", "[ticker]")
 {
   Ticker ticker{};
-  REQUIRE(ticker == "");
-}
+  SECTION("streams as an empty string")
+  {
+    std::stringstream sstr;
+    sstr << ticker;
+    REQUIRE(sstr.str() == "");
+  }
 
-TEST_CASE("Default-constructed Ticker can be printed as a string", "[ticker]")
-{
-  Ticker ticker{};
-  std::stringstream sstr;
-  sstr << ticker;
-  REQUIRE(sstr.str() == "");
+  SECTION("returns true for IsEmpty") { REQUIRE(ticker.IsEmpty()); }
+  SECTION("compares true with an empty string") { REQUIRE(ticker == ""); }
+  SECTION("compares false with an non-empty string") { REQUIRE(ticker != "AABB"); }
+  SECTION("compares smaller to a non-empty Ticker") { REQUIRE(ticker < Ticker{ "AABB" }); }
+  SECTION("can be compared to a string_view")
+  {
+    REQUIRE(ticker == std::string_view());
+    REQUIRE(ticker != std::string_view("AABB"));
+  }
 }
-
-TEST_CASE("Default-constructed Ticker is empty", "[ticker]")
-{
-  Ticker ticker{};
-  REQUIRE(ticker.IsEmpty());
-}
-
-TEST_CASE("String-costructed Ticker is not empty", "[ticker]")
+TEST_CASE("Ticker constructed from a string_view", "[ticker]")
 {
   Ticker ticker{ "AABB" };
-  REQUIRE(!ticker.IsEmpty());
+  SECTION("streams contents correctly")
+  {
+    std::stringstream sstr;
+    sstr << ticker;
+    REQUIRE(sstr.str() == "AABB");
+  }
+  SECTION("returns false for IsEmpty") { REQUIRE(!ticker.IsEmpty()); }
+  SECTION("compares equal with the same string") { REQUIRE(ticker == Ticker{ "AABB" }); }
+  SECTION("compares not equal with a different string") { REQUIRE(ticker != Ticker{ "AABC" }); }
+  SECTION("compares smaller/greater correctly")
+  {
+    REQUIRE(ticker > Ticker{ "AAAA" });
+    REQUIRE(ticker < Ticker{ "BBBB" });
+  }
+  SECTION("can be compared to a string view")
+  {
+    REQUIRE(ticker == std::string_view("AABB"));
+    REQUIRE(ticker != std::string_view());
+  }
 }
 
 TEST_CASE("Ticker only constructs with the right size string", "[ticker]")
