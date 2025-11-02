@@ -104,7 +104,7 @@ include(cmake/PackageProject.cmake)
 # we know we want to ship
 order_book_package_project(
   TARGETS
-  intro
+  core
   order_book_options
   order_book_warnings
   # FIXME: this does not work! CK
