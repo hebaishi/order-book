@@ -49,4 +49,24 @@ TEST_CASE("Default-constructed Ticker can be printed as a string", "[ticker]")
   REQUIRE(sstr.str() == "");
 }
 
+TEST_CASE("Default-constructed Ticker is empty", "[ticker]")
+{
+  Ticker ticker{};
+  REQUIRE(ticker.IsEmpty());
+}
+
+TEST_CASE("String-costructed Ticker is not empty", "[ticker]")
+{
+  Ticker ticker{ "AABB" };
+  REQUIRE(!ticker.IsEmpty());
+}
+
+TEST_CASE("Ticker only constructs with the right size string", "[ticker]")
+{
+  REQUIRE_THROWS(Ticker{ "A" });
+  REQUIRE_THROWS(Ticker{ "AA" });
+  REQUIRE_THROWS(Ticker{ "AAA" });
+  REQUIRE_NOTHROW(Ticker{ "AAAA" });
+}
+
 }// namespace order_book::core
