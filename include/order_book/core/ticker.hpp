@@ -29,7 +29,7 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const Ticker &ticker)
   {
     if (ticker.IsEmpty()) { return stream; }
-    std::array<char, N + 1> string_array;
+    std::array<char, N + 1> string_array{};
     std::copy(ticker.storage_.begin(), ticker.storage_.end(), string_array.begin());
     stream << string_array.data();
     return stream;
