@@ -1,0 +1,75 @@
+#include <catch2/catch_test_macros.hpp>
+#include <order_book/core/order/side.hpp>
+#include <order_book/core/orders.hpp>
+
+namespace order_book::core {
+
+constexpr int LowPrice = 100;
+constexpr int HighPrice = 200;
+
+static Order MakeOrder(int price, std::optional<order::Id> order_id = {})
+{
+  constexpr int FixedUserId = 1;
+  constexpr int FixedQuantity = 10;
+  return Order{ .quantity = FixedQuantity,
+    .price = price,
+    .user_id = FixedUserId,
+    .id = order_id,
+    .symbol = Symbol{ "GOLD" },
+    .side = order::Side::Buy };
+}
+
+TEST_CASE("Given an empty buy orders list", "[orders]")
+{
+  BuyOrders buy_orders;
+  SECTION("With one order")
+  {
+    auto first_order_id = buy_orders.Add(MakeOrder(LowPrice));
+    REQUIRE(first_order_id == 0);
+    SECTION("It returns the only order as the best order")
+    {
+      const auto best = buy_orders.GetBest();
+      REQUIRE(best.has_value());
+      REQUIRE(best.value() == MakeOrder(LowPrice, first_order_id));
+    }
+    SECTION("It returns a higher price order as the best order")
+    {
+      auto second_order_id = buy_orders.Add(MakeOrder(HighPrice));
+      const auto best = buy_orders.GetBest();
+      REQUIRE(second_order_id == 1);
+      REQUIRE(best.has_value());
+      REQUIRE(best == MakeOrder(HighPrice, second_order_id));
+    }
+    SECTION("It returns nothing when flushed")
+    {
+      buy_orders.Flush();
+      const auto best = buy_orders.GetBest();
+      REQUIRE(!best.has_value());
+    }
+  }
+}
+
+TEST_CASE("Given an empty sell orders list", "[orders]")
+{
+  SellOrders sell_orders;
+  SECTION("With one order")
+  {
+    const auto first_order_id = sell_orders.Add(MakeOrder(HighPrice));
+    REQUIRE(first_order_id == 0);
+    SECTION("It returns the only order as the best order")
+    {
+      const auto best = sell_orders.GetBest();
+      REQUIRE(best.has_value());
+      REQUIRE(best.value() == MakeOrder(HighPrice, first_order_id));
+    }
+    SECTION("It returns a lower price order as the best order")
+    {
+      const auto second_order_id = sell_orders.Add(MakeOrder(LowPrice));
+      const auto best = sell_orders.GetBest();
+      REQUIRE(second_order_id == 1);
+      REQUIRE(best.has_value());
+      REQUIRE(best == MakeOrder(LowPrice, second_order_id));
+    }
+  }
+}
+}// namespace order_book::core
