@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <order_book/core/ticker.hpp>
+#include <sstream>
 
 namespace order_book::core {
 
@@ -11,7 +12,7 @@ TEST_CASE("An empty ticker", "[ticker]")
   {
     std::stringstream sstr;
     sstr << ticker;
-    REQUIRE(sstr.str() == "");
+    REQUIRE(sstr.str().empty());
   }
 
   SECTION("returns true for IsEmpty") { REQUIRE(ticker.IsEmpty()); }

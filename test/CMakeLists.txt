@@ -29,13 +29,19 @@ add_test(NAME cli.has_help COMMAND intro --help)
 add_test(NAME cli.version_matches COMMAND intro --version)
 set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests core/ticker.cpp)
+add_executable(
+  order_book_tests
+  core/ticker.cpp
+  core/orders.cpp
+)
 target_link_libraries(
-  tests
+  order_book_tests
   PRIVATE order_book::order_book_warnings
           order_book::order_book_options
           order_book::core
-          Catch2::Catch2WithMain)
+          Catch2::Catch2WithMain
+          boost_json
+        )
 
 if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(
