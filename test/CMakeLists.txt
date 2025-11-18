@@ -43,6 +43,7 @@ target_link_libraries(
           boost_json
         )
 
+add_test(NAME order_book_tests COMMAND order_book_tests)
 if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(
     TARGET tests
