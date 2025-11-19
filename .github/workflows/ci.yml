@@ -206,3 +206,5 @@ jobs:
           name: ${{ runner.os }}-coverage
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage.xml
+          disable_gpg_verification: true
+

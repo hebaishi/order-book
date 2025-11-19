@@ -52,6 +52,10 @@ function(order_book_setup_dependencies)
     config
     core
     bind
+    json
+    endian
+    container
+    container_hash
     static_assert
     throw_exception
     concept_check

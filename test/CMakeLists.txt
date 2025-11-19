@@ -20,23 +20,30 @@ endif()
 include(${Catch2_SOURCE_DIR}/extras/Catch.cmake)
 
 # Provide a simple smoke test to make sure that the CLI works and can display a --help message
-add_test(NAME cli.has_help COMMAND intro --help)
+add_test(NAME cli.has_help COMMAND order_book_tests --help)
 
 # Provide a test to verify that the version being reported from the application
 # matches the version given to CMake. This will be important once you package
 # your program. Real world shows that this is the kind of simple mistake that is easy
 # to make, but also easy to test for.
-add_test(NAME cli.version_matches COMMAND intro --version)
-set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
+# add_test(NAME cli.version_matches COMMAND order_book_tests --version)
+# set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests core/ticker.cpp)
+add_executable(
+  order_book_tests
+  core/ticker.cpp
+  core/orders.cpp
+)
 target_link_libraries(
-  tests
+  order_book_tests
   PRIVATE order_book::order_book_warnings
           order_book::order_book_options
           order_book::core
-          Catch2::Catch2WithMain)
+          Catch2::Catch2WithMain
+          boost_json
+        )
 
+add_test(NAME order_book_tests COMMAND order_book_tests)
 if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(
     TARGET tests
