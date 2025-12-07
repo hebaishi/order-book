@@ -1,12 +1,17 @@
 include(GenerateExportHeader)
 
-add_library(core INTERFACE)
+add_library(
+  core
+  SHARED
+  src/core/order.cpp
+)
 
 add_library(order_book::core ALIAS core)
 
 target_link_libraries(core INTERFACE order_book_options order_book_warnings)
+target_link_libraries(core PRIVATE boost_json)
 
-target_include_directories(core ${WARNING_GUARD} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/public>
+target_include_directories(core ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/public>
                                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/public>)
 
 target_compile_features(core INTERFACE cxx_std_20)

@@ -1,35 +1,15 @@
-#include <boost/json/serialize.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <optional>
 #include <order_book/core/order.hpp>
 #include <order_book/core/order/id.hpp>
 #include <order_book/core/order/side.hpp>
 #include <order_book/core/orders.hpp>
-#include <ostream>
-#include <sstream>
-#include <string>
 
 namespace order_book::core {
 
 constexpr int LowPrice = 100;
 constexpr int HighPrice = 200;
 
-// TODO: Move this into order.cpp
-std::ostream &operator<<(std::ostream &stream, const Order &order)
-{
-  namespace js = boost::json;
-  std::stringstream symbol_name;
-  symbol_name << order.symbol;
-  stream << js::serialize(js::object{
-    { "quantity", order.quantity },
-    { "price", order.price },
-    { "user_id", order.user_id },
-    { "id", order.id.has_value() ? std::to_string(order.id.value()) : "null" },
-    { "symbol", symbol_name.str() },
-    { "side", order.side == order::Side::Buy ? "buy" : "sell" },
-  });
-  return stream;
-}
 
 static Order MakeOrder(int price, std::optional<order::Id> order_id = {})
 {
