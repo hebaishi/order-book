@@ -50,12 +50,14 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
   {
     auto first_order_id = buy_orders.Add(MakeOrder(LowPrice));
     REQUIRE(first_order_id == 0);
+    // Req-Orders-get-only
     SECTION("It returns the only order as the best order")
     {
       const auto best = buy_orders.GetBest();
       REQUIRE(best.has_value());
       REQUIRE(best.value_or(Order{}) == MakeOrder(LowPrice, first_order_id));
     }
+    // Req-Orders-get-best
     SECTION("It returns a higher price order as the best order")
     {
       auto second_order_id = buy_orders.Add(MakeOrder(HighPrice));
@@ -64,13 +66,15 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
       REQUIRE(best.has_value());
       REQUIRE(best == MakeOrder(HighPrice, second_order_id));
     }
-    SECTION("It returns nothing when flushed")
+    // Req-Orders-return-nothing-empty
+    SECTION("It returns nothing when empty")
     {
       buy_orders.Flush();
       const auto best = buy_orders.GetBest();
       REQUIRE(!best.has_value());
     }
   }
+  // Req-Orders-get-best
   SECTION("With a high value then a low value order")
   {
     const auto high_order_id = buy_orders.Add(MakeOrder(HighPrice));
@@ -83,6 +87,7 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
       REQUIRE(best_order.value_or(Order{}) == MakeOrder(HighPrice, high_order_id));
     }
   }
+  // Req-Orders-get-best
   SECTION("With a low value then a high value order")
   {
     const auto low_order_id = buy_orders.Add(MakeOrder(LowPrice));
@@ -104,12 +109,14 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
   {
     const auto first_order_id = sell_orders.Add(MakeOrder(HighPrice));
     REQUIRE(first_order_id == 0);
+    // Req-Orders-get-only
     SECTION("It returns the only order as the best order")
     {
       const auto best = sell_orders.GetBest();
       REQUIRE(best.has_value());
       REQUIRE(best.value_or(Order{}) == MakeOrder(HighPrice, first_order_id));
     }
+    // Req-Orders-get-best
     SECTION("It returns a lower price order as the best order")
     {
       const auto second_order_id = sell_orders.Add(MakeOrder(LowPrice));
@@ -119,6 +126,7 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
       REQUIRE(best == MakeOrder(LowPrice, second_order_id));
     }
   }
+  // Req-Orders-get-best
   SECTION("With a high value then a low value order")
   {
     const auto high_order_id = sell_orders.Add(MakeOrder(HighPrice));
@@ -132,6 +140,7 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
       REQUIRE(best_order.value_or(Order{}) == MakeOrder(LowPrice, low_order_id));
     }
   }
+  // Req-Orders-get-best
   SECTION("With a low value then a high value order")
   {
     const auto low_order_id = sell_orders.Add(MakeOrder(LowPrice));
