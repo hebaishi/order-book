@@ -57,8 +57,7 @@ add_library(order_book::order_book_warnings ALIAS order_book_warnings)
 # configure files based on CMake configuration options
 add_subdirectory(configured_files)
 
-# Adding the src:
-add_subdirectory(src)
+add_subdirectory(order_book/core)
 
 # Don't even look at tests if we're not top level
 if(NOT PROJECT_IS_TOP_LEVEL)
@@ -68,10 +67,6 @@ endif()
 # Adding the tests:
 include(CTest)
 
-if(BUILD_TESTING)
-  message(AUTHOR_WARNING "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
-  add_subdirectory(test)
-endif()
 
 
 if(order_book_BUILD_FUZZ_TESTS)
