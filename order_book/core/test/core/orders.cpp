@@ -29,29 +29,29 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
   SECTION("With one order")
   {
     auto first_order_id = buy_orders.Add(MakeOrder(LowPrice));
-    REQUIRE(first_order_id == 0);
+    CHECK(first_order_id == 0);
     // Req-Orders-get-only
     SECTION("It returns the only order as the best order")
     {
       const auto best = buy_orders.GetBest();
-      REQUIRE(best.has_value());
-      REQUIRE(best.value_or(Order{}) == MakeOrder(LowPrice, first_order_id));
+      CHECK(best.has_value());
+      CHECK(best.value_or(Order{}) == MakeOrder(LowPrice, first_order_id));
     }
     // Req-Orders-get-best
     SECTION("It returns a higher price order as the best order")
     {
       auto second_order_id = buy_orders.Add(MakeOrder(HighPrice));
       const auto best = buy_orders.GetBest();
-      REQUIRE(second_order_id == 1);
-      REQUIRE(best.has_value());
-      REQUIRE(best == MakeOrder(HighPrice, second_order_id));
+      CHECK(second_order_id == 1);
+      CHECK(best.has_value());
+      CHECK(best == MakeOrder(HighPrice, second_order_id));
     }
     // Req-Orders-return-nothing-empty
     SECTION("It returns nothing when empty")
     {
       buy_orders.Flush();
       const auto best = buy_orders.GetBest();
-      REQUIRE(!best.has_value());
+      CHECK(!best.has_value());
     }
   }
   // Req-Orders-get-best
@@ -63,8 +63,8 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
     SECTION("It returns the highest price order")
     {
       const auto best_order = buy_orders.GetBest();
-      REQUIRE(best_order.has_value());
-      REQUIRE(best_order.value_or(Order{}) == MakeOrder(HighPrice, high_order_id));
+      CHECK(best_order.has_value());
+      CHECK(best_order.value_or(Order{}) == MakeOrder(HighPrice, high_order_id));
     }
   }
   // Req-Orders-get-best
@@ -76,8 +76,8 @@ TEST_CASE("Given an empty buy orders list", "[orders]")
     SECTION("It returns the highest price order")
     {
       const auto best_order = buy_orders.GetBest();
-      REQUIRE(best_order.has_value());
-      REQUIRE(best_order.value_or(Order{}) == MakeOrder(HighPrice, high_order_id));
+      CHECK(best_order.has_value());
+      CHECK(best_order.value_or(Order{}) == MakeOrder(HighPrice, high_order_id));
     }
   }
 }
@@ -88,22 +88,22 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
   SECTION("With one order")
   {
     const auto first_order_id = sell_orders.Add(MakeOrder(HighPrice));
-    REQUIRE(first_order_id == 0);
+    CHECK(first_order_id == 0);
     // Req-Orders-get-only
     SECTION("It returns the only order as the best order")
     {
       const auto best = sell_orders.GetBest();
-      REQUIRE(best.has_value());
-      REQUIRE(best.value_or(Order{}) == MakeOrder(HighPrice, first_order_id));
+      CHECK(best.has_value());
+      CHECK(best.value_or(Order{}) == MakeOrder(HighPrice, first_order_id));
     }
     // Req-Orders-get-best
     SECTION("It returns a lower price order as the best order")
     {
       const auto second_order_id = sell_orders.Add(MakeOrder(LowPrice));
       const auto best = sell_orders.GetBest();
-      REQUIRE(second_order_id == 1);
-      REQUIRE(best.has_value());
-      REQUIRE(best == MakeOrder(LowPrice, second_order_id));
+      CHECK(second_order_id == 1);
+      CHECK(best.has_value());
+      CHECK(best == MakeOrder(LowPrice, second_order_id));
     }
   }
   // Req-Orders-get-best
@@ -116,8 +116,8 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
     SECTION("It returns the lowest price order")
     {
       const auto best_order = sell_orders.GetBest();
-      REQUIRE(best_order.has_value());
-      REQUIRE(best_order.value_or(Order{}) == MakeOrder(LowPrice, low_order_id));
+      CHECK(best_order.has_value());
+      CHECK(best_order.value_or(Order{}) == MakeOrder(LowPrice, low_order_id));
     }
   }
   // Req-Orders-get-best
@@ -129,8 +129,8 @@ TEST_CASE("Given an empty sell orders list", "[orders]")
     SECTION("It returns the lowest price order")
     {
       const auto best_order = sell_orders.GetBest();
-      REQUIRE(best_order.has_value());
-      REQUIRE(best_order.value_or(Order{}) == MakeOrder(LowPrice, low_order_id));
+      CHECK(best_order.has_value());
+      CHECK(best_order.value_or(Order{}) == MakeOrder(LowPrice, low_order_id));
     }
   }
 }
