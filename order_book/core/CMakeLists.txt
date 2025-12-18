@@ -3,6 +3,7 @@ include(GenerateExportHeader)
 add_library(
   core
   SHARED
+  src/core/book.cpp
   src/core/order.cpp
 )
 

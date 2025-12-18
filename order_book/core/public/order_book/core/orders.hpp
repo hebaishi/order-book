@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <functional>
 #include <optional>
 #include <order_book/core/order.hpp>
