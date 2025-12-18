@@ -33,6 +33,7 @@ add_executable(
   order_book_tests
   core/ticker.cpp
   core/orders.cpp
+  core/state/process.cpp
 )
 target_link_libraries(
   order_book_tests
