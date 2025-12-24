@@ -1,41 +1,12 @@
-include(GenerateExportHeader)
-
-add_library(
-  core
-  SHARED
-  src/core/book.cpp
-  src/core/order.cpp
-  src/core/state/process.cpp
+add_shared_library(
+  NAME core
+  SOURCES
+    src/core/book.cpp
+    src/core/order.cpp
+    src/core/state/process.cpp
+  MODULES
+    boost_json
 )
-
-add_library(order_book::core ALIAS core)
-
-target_link_libraries(core INTERFACE order_book_options order_book_warnings)
-target_link_libraries(core PRIVATE boost_json)
-generate_export_header(
-  core
-  EXPORT_FILE_NAME public/core_export.h
-)
-target_compile_definitions(
-  core
-  PRIVATE
-  core_EXPORTS
-)
-
-target_include_directories(core ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/public>
-                                                           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/public>)
-
-target_compile_features(core INTERFACE cxx_std_20)
-
-set_target_properties(
-  core
-  PROPERTIES VERSION ${PROJECT_VERSION}
-             CXX_VISIBILITY_PRESET hidden
-             VISIBILITY_INLINES_HIDDEN YES)
-
-if(NOT BUILD_SHARED_LIBS)
-  target_compile_definitions(core INTERFACE SAMPLE_LIBRARY_STATIC_DEFINE)
-endif()
 
 if(BUILD_TESTING)
   message(AUTHOR_WARNING "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")

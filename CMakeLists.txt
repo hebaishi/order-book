@@ -25,6 +25,8 @@ project(
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
 
+include(GenerateExportHeader)
+include(cmake/Targets.cmake)
 
 order_book_setup_options()
 
