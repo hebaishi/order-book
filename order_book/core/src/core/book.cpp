@@ -1,4 +1,4 @@
-#include <order_book/core/book.hpp>
+#include <order_book/core/order/book.hpp>
 #include <order_book/core/order/symbol.hpp>
 
 namespace order_book::core::order {

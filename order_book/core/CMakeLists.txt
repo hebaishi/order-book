@@ -5,12 +5,22 @@ add_library(
   SHARED
   src/core/book.cpp
   src/core/order.cpp
+  src/core/state/process.cpp
 )
 
 add_library(order_book::core ALIAS core)
 
 target_link_libraries(core INTERFACE order_book_options order_book_warnings)
 target_link_libraries(core PRIVATE boost_json)
+generate_export_header(
+  core
+  EXPORT_FILE_NAME public/core_export.h
+)
+target_compile_definitions(
+  core
+  PRIVATE
+  core_EXPORTS
+)
 
 target_include_directories(core ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/public>
                                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/public>)
