@@ -42,6 +42,8 @@ template<order::Side side> struct Orders
   }
 
   void Flush() { orders.clear(); }
+
+  void Pop() { orders.pop_back(); }
 };
 
 using BuyOrders = Orders<order::Side::Buy>;
