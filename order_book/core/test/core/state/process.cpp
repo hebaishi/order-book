@@ -9,7 +9,7 @@
 namespace order_book::core::state {
 constexpr int DefaultOrderQuantity = 100;
 constexpr int DefaultOrderPrice = 100;
-auto DefaultSymbol() { return Symbol{ "GOLD" }; }
+auto DefaultSymbol() { return order::Symbol{ "GOLD" }; }
 TEST_CASE("Given an empty state", "[Process]")
 {
   order_book::core::State state;
