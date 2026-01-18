@@ -5,7 +5,6 @@ project(CmakeConfigPackageTests LANGUAGES CXX)
 # ---- Test as standalone project the exported config package ----
 
 if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
-  enable_testing()
 
   find_package(order_book CONFIG REQUIRED) # for intro, project_options, ...
 
@@ -33,6 +32,8 @@ add_executable(
   order_book_tests
   core/ticker.cpp
   core/orders.cpp
+  core/match.cpp
+  core/state/process.cpp
 )
 target_link_libraries(
   order_book_tests

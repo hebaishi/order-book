@@ -19,7 +19,7 @@ static Order MakeOrder(int price, std::optional<order::Id> order_id = {})
     .price = price,
     .user_id = FixedUserId,
     .id = order_id,
-    .symbol = Symbol{ "GOLD" },
+    .symbol = order::Symbol{ "GOLD" },
     .side = order::Side::Buy };
 }
 

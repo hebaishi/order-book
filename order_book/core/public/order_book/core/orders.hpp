@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <functional>
 #include <optional>
 #include <order_book/core/order.hpp>
@@ -41,6 +42,8 @@ template<order::Side side> struct Orders
   }
 
   void Flush() { orders.clear(); }
+
+  void Pop() { orders.pop_back(); }
 };
 
 using BuyOrders = Orders<order::Side::Buy>;
