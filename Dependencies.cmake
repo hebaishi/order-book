@@ -42,58 +42,71 @@ function(order_book_setup_dependencies)
 
   set(
     BOOST_LIBS
-    asio
-    align
-    date_time
-    context
-    assert
     algorithm
+    iostreams
+    random
+    dynamic_bitset
+    align
     array
-    config
-    core
+    asio
+    assert
+    atomic
     bind
-    json
-    endian
+    chrono
+    concept_check
+    config
+    container
     container
     container_hash
-    static_assert
-    throw_exception
-    concept_check
-    mp11
-    pool
+    container_hash
+    context
+    conversion
+    core
+    date_time
+    describe
+    detail
+    endian
     exception
-    preprocessor
-    integer
-    smart_ptr
-    tuple
-    type_traits
-    predef
     function
-    winapi
-    system
+    function_types
+    functional
+    fusion
+    integer
+    intrusive
     io
     iterator
-    mpl
-    variant2
-    detail
+    json
     lexical_cast
-    fusion
-    utility
-    container
-    range
-    optional
-    container_hash
-    intrusive
-    regex
     move
-    describe
-    conversion
-    unordered
-    function_types
-    typeof
+    mp11
+    mpl
     numeric_conversion
+    optional
+    phoenix
+    pool
+    predef
+    preprocessor
+    proto
+    range
+    ratio
+    regex
+    serialization
+    smart_ptr
+    spirit
+    static_assert
+    system
+    thread
+    throw_exception
     tokenizer
-    functional
+    tuple
+    type_index
+    type_traits
+    typeof
+    unordered
+    utility
+    variant
+    variant2
+    winapi
   )
 
   foreach(LIB IN LISTS BOOST_LIBS)
