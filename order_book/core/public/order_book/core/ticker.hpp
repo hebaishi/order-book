@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <boost/serialization/array.hpp>
 #include <stdexcept>
 #include <string_view>
 
@@ -34,6 +35,7 @@ public:
     stream << string_array.data();
     return stream;
   }
+  template<class Archive> void serialize(Archive &archive, const unsigned int /*version*/) { archive & storage_; }
 
 private:
   std::array<char, N> storage_;

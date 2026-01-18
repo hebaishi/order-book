@@ -7,6 +7,7 @@ add_shared_library(
     src/core/state/process.cpp
   MODULES
     boost_json
+    boost_serialization
 )
 
 if(BUILD_TESTING)
