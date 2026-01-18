@@ -3,6 +3,7 @@ add_shared_library(
   SOURCES
     src/core/book.cpp
     src/core/order.cpp
+    src/core/match.cpp
     src/core/state/process.cpp
   MODULES
     boost_json

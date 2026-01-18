@@ -1,4 +1,8 @@
+#include <algorithm>
 #include <order_book/core/match.hpp>
+#include <order_book/core/order/book.hpp>
+#include <order_book/core/trade.hpp>
+#include <vector>
 namespace order_book::core {
 std::vector<Trade> Match(order::Book &order_book)
 {
@@ -6,8 +10,8 @@ std::vector<Trade> Match(order::Book &order_book)
   for (auto best_buy = order_book.buy_orders.GetBest(), best_sell = order_book.sell_orders.GetBest();
     best_buy && best_sell && best_buy->price >= best_sell->price;) {
     const auto trade_quantity = std::min(best_buy->quantity, best_sell->quantity);
-    trades.emplace_back(Trade{ .buy_id = best_buy->id.value(),
-      .sell_id = best_sell->id.value(),
+    trades.emplace_back(Trade{ .buy_id = best_buy->id.value_or(-1),
+      .sell_id = best_sell->id.value_or(-1),
       .quantity = trade_quantity,
       .price = best_sell->price });
 
