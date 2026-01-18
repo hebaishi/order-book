@@ -9,7 +9,7 @@
 namespace order_book::core::state {
 constexpr int DefaultOrderQuantity = 100;
 constexpr int DefaultOrderPrice = 100;
-auto DefaultSymbol() { return order::Symbol{ "GOLD" }; }
+constexpr auto DefaultSymbol = order::Symbol{ "GOLD" };
 TEST_CASE("Given an empty state", "[Process]")
 {
   order_book::core::State state;
@@ -23,7 +23,7 @@ TEST_CASE("Given an empty state", "[Process]")
         .price = DefaultOrderPrice,
         .user_id = 1,
         .id = {},
-        .symbol = DefaultSymbol(),
+        .symbol = DefaultSymbol,
         .side = order::Side::Buy,
       });
     CHECK(state.books.size() == 1);
@@ -38,7 +38,7 @@ TEST_CASE("Given an empty state", "[Process]")
         .price = DefaultOrderPrice,
         .user_id = 1,
         .id = {},
-        .symbol = DefaultSymbol(),
+        .symbol = DefaultSymbol,
         .side = order::Side::Sell,
       });
     CHECK(state.books.size() == 1);

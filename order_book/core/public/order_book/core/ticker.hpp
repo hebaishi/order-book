@@ -9,8 +9,8 @@ namespace order_book::core {
 template<size_t N = 4> class Ticker
 {
 public:
-  explicit Ticker() = default;
-  explicit Ticker(std::string_view str)
+  explicit constexpr Ticker() = default;
+  explicit constexpr Ticker(std::string_view str)
   {
     if (str.size() != N) { throw std::runtime_error("Incorrect string size"); }
     std::copy(str.begin(), str.end(), storage_.begin());
