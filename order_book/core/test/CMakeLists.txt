@@ -5,7 +5,6 @@ project(CmakeConfigPackageTests LANGUAGES CXX)
 # ---- Test as standalone project the exported config package ----
 
 if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
-  enable_testing()
 
   find_package(order_book CONFIG REQUIRED) # for intro, project_options, ...
 
