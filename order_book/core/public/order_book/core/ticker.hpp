@@ -36,6 +36,14 @@ public:
     stream << string_array.data();
     return stream;
   }
+  [[nodiscard]] std::string ToString() const
+  {
+    if (IsEmpty()) { return {}; }
+    std::string output;
+    output.resize(Size);
+    std::copy(storage_.begin(), storage_.end(), output.begin());
+    return output;
+  }
   template<class Archive> void serialize(Archive &archive, const unsigned int /*version*/) { archive & storage_; }
 
 private:

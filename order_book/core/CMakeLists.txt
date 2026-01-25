@@ -6,6 +6,7 @@ add_shared_library(
     src/core/match.cpp
     src/core/state/process.cpp
     src/core/message/parse.cpp
+    src/core/message/serialize.cpp
     src/core/message/token_parser.cpp
   MODULES
     boost_json
