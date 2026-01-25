@@ -9,6 +9,7 @@ namespace order_book::core {
 template<size_t N = 4> class Ticker
 {
 public:
+  static constexpr auto Size = N;
   explicit constexpr Ticker() = default;
   explicit constexpr Ticker(std::string_view str)
   {
