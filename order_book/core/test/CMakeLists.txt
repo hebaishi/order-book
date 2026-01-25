@@ -35,6 +35,7 @@ add_executable(
   core/match.cpp
   core/message/new_order.cpp
   core/state/process.cpp
+  core/message/parse.cpp
 )
 target_link_libraries(
   order_book_tests
