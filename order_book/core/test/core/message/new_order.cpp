@@ -15,9 +15,8 @@ namespace order_book::core {
 TEST_CASE("NewOrder can be serialized and deserialized", "[messaging]")
 {
   constexpr auto symbol = order::Symbol{ "GOLD" };
-  const auto original_order = message::NewOrder{
-    .quantity = 100, .price = 122, .user_id = 2345, .id = 234, .symbol = symbol, .side = order::Side::Buy
-  };
+  const auto original_order =
+    message::NewOrder{ .quantity = 100, .price = 122, .user_id = 2345, .symbol = symbol, .side = order::Side::Buy };
   std::string output;
 
   {

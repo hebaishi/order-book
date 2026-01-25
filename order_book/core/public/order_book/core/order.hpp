@@ -13,7 +13,7 @@ struct Order
   int quantity{};
   int price{};
   int user_id{};
-  std::optional<order::Id> id;
+  order::Id id;
   order::Symbol symbol{};
   order::Side side{ order::Side::Buy };
   bool operator==(const Order &other) const = default;

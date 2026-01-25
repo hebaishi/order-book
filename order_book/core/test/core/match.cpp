@@ -22,7 +22,6 @@ TEST_CASE("Processing a single buy order results in no match", "[matching]")
       .quantity = 0,
       .price = 0,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -37,7 +36,6 @@ TEST_CASE("Processing a single sell order results in no match", "[matching]")
       .quantity = 0,
       .price = 0,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -52,7 +50,6 @@ TEST_CASE("Processing a orders where buy price is lower than sell price results 
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -61,7 +58,6 @@ TEST_CASE("Processing a orders where buy price is lower than sell price results 
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -77,7 +73,6 @@ TEST_CASE("Processing orders where buy exceeds sell results in a single match", 
       .quantity = quantity,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -86,7 +81,6 @@ TEST_CASE("Processing orders where buy exceeds sell results in a single match", 
       .quantity = quantity,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -103,7 +97,6 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
       .quantity = Double,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -112,7 +105,6 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -121,7 +113,6 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -139,7 +130,6 @@ TEST_CASE("Processing two buy order with one sell orders that match", "[matching
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -148,7 +138,6 @@ TEST_CASE("Processing two buy order with one sell orders that match", "[matching
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -157,7 +146,6 @@ TEST_CASE("Processing two buy order with one sell orders that match", "[matching
       .quantity = Double,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });

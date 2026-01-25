@@ -22,7 +22,6 @@ TEST_CASE("Given an empty state", "[Process]")
         .quantity = DefaultOrderQuantity,
         .price = DefaultOrderPrice,
         .user_id = 1,
-        .id = {},
         .symbol = DefaultSymbol,
         .side = order::Side::Buy,
       });
@@ -37,7 +36,6 @@ TEST_CASE("Given an empty state", "[Process]")
         .quantity = DefaultOrderQuantity,
         .price = DefaultOrderPrice,
         .user_id = 1,
-        .id = {},
         .symbol = DefaultSymbol,
         .side = order::Side::Sell,
       });
