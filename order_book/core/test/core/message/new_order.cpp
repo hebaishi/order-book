@@ -9,14 +9,14 @@
 #include <string>
 
 #include <order_book/core/message/new_order.hpp>
-namespace order_book::core {
+namespace order_book::core::message {
 
 
 TEST_CASE("NewOrder can be serialized and deserialized", "[messaging]")
 {
   constexpr auto symbol = order::Symbol{ "GOLD" };
   const auto original_order =
-    message::NewOrder{ .quantity = 100, .price = 122, .user_id = 2345, .symbol = symbol, .side = order::Side::Buy };
+    NewOrder{ .quantity = 100, .price = 122, .user_id = 2345, .symbol = symbol, .side = order::Side::Buy };
   std::string output;
 
   {
@@ -26,7 +26,7 @@ TEST_CASE("NewOrder can be serialized and deserialized", "[messaging]")
   }
   std::cout << output << '\n';
 
-  message::NewOrder deserialized_order;
+  NewOrder deserialized_order;
   {
     auto stream = boost::iostreams::filtering_istream(boost::make_iterator_range(output));
     boost::archive::text_iarchive input_archive(stream);
@@ -34,4 +34,4 @@ TEST_CASE("NewOrder can be serialized and deserialized", "[messaging]")
   }
   REQUIRE(original_order == deserialized_order);
 }
-}// namespace order_book::core
+}// namespace order_book::core::message
