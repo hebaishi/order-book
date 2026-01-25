@@ -33,7 +33,10 @@ add_executable(
   core/ticker.cpp
   core/orders.cpp
   core/match.cpp
+  core/message/new_order.cpp
   core/state/process.cpp
+  core/message/parse.cpp
+  core/message/serialize.cpp
 )
 target_link_libraries(
   order_book_tests
@@ -42,6 +45,8 @@ target_link_libraries(
           order_book::core
           Catch2::Catch2WithMain
           boost_json
+          boost_serialization
+          boost_iostreams
         )
 
 add_test(NAME order_book_tests COMMAND order_book_tests)

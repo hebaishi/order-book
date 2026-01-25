@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <functional>
 #include <optional>
+#include <order_book/core/message/new_order.hpp>
 #include <order_book/core/order.hpp>
 #include <order_book/core/order/side.hpp>
 
@@ -27,12 +28,19 @@ template<order::Side side> struct Orders
   Orders() = default;
 
   using ComparatorFunction = Comparator<side>::Value;
-  [[nodiscard]] order::Id Add(Order order)
+  [[nodiscard]] order::Id Add(message::NewOrder new_order)
   {
-    order.id = current_id++;
-    orders.push_back(order);
+    const auto new_order_id = current_id++;
+    orders.push_back(Order{
+      .quantity = new_order.quantity,
+      .price = new_order.price,
+      .user_id = new_order.user_id,
+      .id = new_order_id,
+      .symbol = new_order.symbol,
+      .side = new_order.side,
+    });
     std::stable_sort(orders.begin(), orders.end(), ComparatorFunction{});
-    return order.id.value();
+    return new_order_id;
   }
 
   [[nodiscard]] std::optional<Order> GetBest() const

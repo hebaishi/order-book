@@ -12,18 +12,17 @@ constexpr auto LowPrice = 100;
 constexpr auto HighPrice = 101;
 constexpr auto Single = 1;
 constexpr auto Double = 2;
-auto GetSymbol() { return order::Symbol{ "GOLD" }; }
+constexpr auto symbol =  order::Symbol{ "GOLD" };
 
 TEST_CASE("Processing a single buy order results in no match", "[matching]")
 {
-  core::State state{ .books = core::order::Books{ order::Book{ GetSymbol() } } };
+  core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   state::Process(state,
     core::message::NewOrder{
       .quantity = 0,
       .price = 0,
       .user_id = 0,
-      .id = {},
-      .symbol = GetSymbol(),
+      .symbol = symbol,
       .side = order::Side::Buy,
     });
   const auto trades = core::Match(state.books[0]);
@@ -31,14 +30,12 @@ TEST_CASE("Processing a single buy order results in no match", "[matching]")
 }
 TEST_CASE("Processing a single sell order results in no match", "[matching]")
 {
-  const auto symbol = order::Symbol{ "GOLD" };
   core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   state::Process(state,
     core::message::NewOrder{
       .quantity = 0,
       .price = 0,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -47,14 +44,13 @@ TEST_CASE("Processing a single sell order results in no match", "[matching]")
 }
 TEST_CASE("Processing a orders where buy price is lower than sell price results in no match", "[matching]")
 {
-  core::State state{ .books = core::order::Books{ order::Book{ GetSymbol() } } };
+  core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   state::Process(state,
     core::message::NewOrder{
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
-      .symbol = GetSymbol(),
+      .symbol = symbol,
       .side = order::Side::Sell,
     });
   state::Process(state,
@@ -62,8 +58,7 @@ TEST_CASE("Processing a orders where buy price is lower than sell price results 
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
-      .symbol = GetSymbol(),
+      .symbol = symbol,
       .side = order::Side::Sell,
     });
   const auto trades = Match(state.books[0]);
@@ -71,7 +66,6 @@ TEST_CASE("Processing a orders where buy price is lower than sell price results 
 }
 TEST_CASE("Processing orders where buy exceeds sell results in a single match", "[matching]")
 {
-  const auto symbol = order::Symbol{ "GOLD" };
   const auto quantity = Single;
   core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   const auto buy_id = state::Process(state,
@@ -79,7 +73,6 @@ TEST_CASE("Processing orders where buy exceeds sell results in a single match", 
       .quantity = quantity,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -88,7 +81,6 @@ TEST_CASE("Processing orders where buy exceeds sell results in a single match", 
       .quantity = quantity,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -99,14 +91,12 @@ TEST_CASE("Processing orders where buy exceeds sell results in a single match", 
 }
 TEST_CASE("Processing one buy order with two sell orders that match", "[matching]")
 {
-  const auto symbol = order::Symbol{ "GOLD" };
   core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   const auto buy_id = state::Process(state,
     core::message::NewOrder{
       .quantity = Double,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -115,7 +105,6 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -124,7 +113,6 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
       .quantity = Single,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
@@ -136,14 +124,12 @@ TEST_CASE("Processing one buy order with two sell orders that match", "[matching
 }
 TEST_CASE("Processing two buy order with one sell orders that match", "[matching]")
 {
-  const auto symbol = order::Symbol{ "GOLD" };
   core::State state{ .books = core::order::Books{ order::Book{ symbol } } };
   const auto buy_id_one = state::Process(state,
     core::message::NewOrder{
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -152,7 +138,6 @@ TEST_CASE("Processing two buy order with one sell orders that match", "[matching
       .quantity = Single,
       .price = HighPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Buy,
     });
@@ -161,7 +146,6 @@ TEST_CASE("Processing two buy order with one sell orders that match", "[matching
       .quantity = Double,
       .price = LowPrice,
       .user_id = 0,
-      .id = {},
       .symbol = symbol,
       .side = order::Side::Sell,
     });
